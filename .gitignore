@@ -1,0 +1,6 @@
+**/build
+**/target
+**/*.cooja
+**/*.native
+**/*.log
+.vscode
