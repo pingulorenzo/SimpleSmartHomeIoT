@@ -54,9 +54,16 @@ static void res_post_put_handler(coap_message_t *request, coap_message_t *respon
 
         len = coap_get_post_variable(request, "value", &value);
 
-        if (success && (len != 0))
-            radiator_temperature = atoi(value);
-        else
+        if (success && (len != 0)){
+            uint8_t precheck = atoi(value);
+
+            if (precheck > TEMP_MAX)
+                radiator_temperature = TEMP_MAX;
+            else if (precheck < TEMP_MIN)
+                radiator_temperature = TEMP_MIN;
+            else 
+                radiator_temperature = precheck;
+        } else
             success = 0;
     }
     if (!success) {

@@ -16,8 +16,8 @@
 #define SERVER_EP ("coap://[fd00::1]:5683")
 #define SERVER_REGISTRATION ("/registration")
 
-#define HUM_MAX 100
-#define HUM_MIN 0
+#define HUM_MAX 90
+#define HUM_MIN 30
 
 extern coap_resource_t res_humidity;
 extern coap_resource_t res_humidifier;

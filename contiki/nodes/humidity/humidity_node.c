@@ -69,18 +69,15 @@ PROCESS_THREAD(humidity_node, ev, data) {
                     humidity = HUM_MIN;
                 else if (humidity > HUM_MAX)
                     humidity = HUM_MAX;
-                res_humidity.trigger();
             }
 
-            // Simulo la variazione dovuta all'attuazione            
+            // Simulo la variazione dovuta all'attuazione e spegnimento automatico        
             else if (humidity > humidifier_value){
                 update_value_dec(humidity);
-                res_humidity.trigger();
-            } 
-
-            // Gestisco lo spegnimento automatico
-            if (humidifier_status && humidifier_value > humidity)
+            } else 
                 humidifier_status = 0;
+
+            res_humidity.trigger();
 
             etimer_reset(&timer_task);
         }

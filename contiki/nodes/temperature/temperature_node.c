@@ -69,26 +69,24 @@ PROCESS_THREAD(temperature_node, ev, data){
                     temperature = TEMP_MIN;
                 else if (temperature > TEMP_MAX)
                     temperature = TEMP_MAX;
-                res_temperature.trigger();
             }
 
             // Simulo la variazione dovuta all'attuazione o eventuali spegnimenti automatici
             if (conditioner_status){
-                if (temperature > conditioner_temperature){
+                if (temperature > conditioner_temperature)
                     update_value_dec(temperature);
-                    res_temperature.trigger();
-                } else
+                else
                     conditioner_status = 0;
             }
 
             if (radiator_status){
-                if (temperature < radiator_temperature){
+                if (temperature < radiator_temperature)
                     update_value_inc(temperature);
-                    res_temperature.trigger();
-                    }
                 else
                     radiator_status = 0;
             }
+            
+            res_temperature.trigger();
 
             etimer_reset(&timer_task);
         }

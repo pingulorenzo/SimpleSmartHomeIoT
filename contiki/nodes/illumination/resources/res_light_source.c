@@ -72,9 +72,14 @@ static void res_post_put_handler(coap_message_t *request, coap_message_t *respon
 
         len = coap_get_post_variable(request, "value", &value);
 
-        if (success && (len != 0))
-            light_source_value = atoi(value);
-        else
+        if (success && (len != 0)){
+            uint16_t precheck = atoi(value);
+
+            if (precheck > LL_MAX)
+                light_source_value = LL_MAX;
+            else 
+                light_source_value = precheck;
+        } else
             success = 0;
     }
 

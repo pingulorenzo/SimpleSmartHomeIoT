@@ -65,10 +65,10 @@ PROCESS_THREAD(illumination_node, ev, data){
             // Simulo il passaggio della giornata
             if (direction){
                 update_value_inc(light_level);
-                res_light_level.trigger();
+                light_level++;
             } else {
                 update_value_dec(light_level);
-                res_light_level.trigger();
+                light_level--;
             }
 
             // Gestione overflow
@@ -78,8 +78,9 @@ PROCESS_THREAD(illumination_node, ev, data){
             } else if (light_level <= LL_MIN){        
                 direction = 1;
                 light_level = LL_MIN;
-                res_light_level.trigger();
             }
+
+            res_light_level.trigger();
 
             // Gestione automatica della luminosity
             if (!light_source_forced_status && light_source_status){
